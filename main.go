@@ -1,8 +1,8 @@
 package main
 
 import (
-    "encoding/json"
-    "log"
+	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -18,5 +18,5 @@ func main() {
 	router.NotFoundHandler = http.HandlerFunc(genericError)
 	router.MethodNotAllowedHandler = http.HandlerFunc(genericError)
 
-    log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(":8000", router))
 }
