@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"html/template"
 	"net/http"
 )
 
-type ApiResponse struct {
+type apiResponse struct {
 	Message  string `json:"message"`
 	Subtitle string `json:"subtitle"`
 }
@@ -59,21 +60,50 @@ var routesFromCompanyToMessage = map[string]string{
 	"/anyway/{company}/{from}": "Who the fuck are you anyway, %s, why are you stirring up so much trouble, and, who pays you?",
 }
 
+// GetCompanyFromHandler is a handler for all routes with a :company and a :from param
 func GetCompanyFromHandler(w http.ResponseWriter, r *http.Request) {
-	matchedRoute, _ := mux.CurrentRoute(r).GetPathTemplate()
-	params := mux.Vars(r)
-	json.NewEncoder(w).Encode(ApiResponse{
-		fmt.Sprintf(routesFromCompanyToMessage[matchedRoute], params["company"]),
-		fmt.Sprintf("- %s", params["from"]),
-	})
+	contentType := r.Header.Get("Content-Type")
+	apiResponse := buildAPIResponseCompanyFrom(r)
+
+	if contentType == "application/json" {
+		json.NewEncoder(w).Encode(apiResponse)
+		return
+	}
+
+	t, _ := template.New("api template").ParseFiles("tmpl/api.html")
+	t.ExecuteTemplate(w, "api.html", apiResponse)
 }
 
+// GetFromHandler is a handler for all routes with just a :from param
 func GetFromHandler(w http.ResponseWriter, r *http.Request) {
+	contentType := r.Header.Get("Content-Type")
+	apiResponse := buildAPIResponseFrom(r)
+
+	if contentType == "application/json" {
+		json.NewEncoder(w).Encode(apiResponse)
+		return
+	}
+
+	t, _ := template.New("api template").ParseFiles("tmpl/api.html")
+	t.ExecuteTemplate(w, "api.html", apiResponse)
+}
+
+func buildAPIResponseFrom(r *http.Request) apiResponse {
 	matchedRoute, _ := mux.CurrentRoute(r).GetPathTemplate()
-	fmt.Println(matchedRoute)
 	params := mux.Vars(r)
-	json.NewEncoder(w).Encode(ApiResponse{
+
+	return apiResponse{
 		routesFromToMessage[matchedRoute],
 		fmt.Sprintf("- %s", params["from"]),
-	})
+	}
+}
+
+func buildAPIResponseCompanyFrom(r *http.Request) apiResponse {
+	matchedRoute, _ := mux.CurrentRoute(r).GetPathTemplate()
+	params := mux.Vars(r)
+
+	return apiResponse{
+		fmt.Sprintf(routesFromCompanyToMessage[matchedRoute], params["company"]),
+		fmt.Sprintf("- %s", params["from"]),
+	}
 }
