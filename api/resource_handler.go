@@ -76,7 +76,7 @@ var routesTwoParamsToMessage = map[string]string{
 	"/outside/{first}/{second}":     "%s, why don't you go outside and play hide-and-go-fuck-yourself?",
 	"/particular/{first}/{second}":  "Fuck this %s in particular.",
 	"/problem/{first}/{second}":     "What the fuck is your problem %s?",
-	"/pulp/{first}/{second}":        ":language, motherfucker, do you speak it?",
+	"/pulp/{first}/{second}":        "%s, motherfucker, do you speak it?",
 	"/shakespeare/{first}/{second}": "%s, Thou clay-brained guts, thou knotty-pated fool, thou whoreson obscene greasy tallow-catch!",
 	"/shutup/{first}/{second}":      "%s, shut the fuck up.",
 	"/thinking/{first}/{second}":    "%s, what the fuck were you actually thinking?",

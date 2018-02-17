@@ -10,10 +10,19 @@ import (
 
 // GenericErrorHandler is the handler for 404s and 405s
 func GenericErrorHandler(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(apiResponse{
+	contentType := r.Header.Get("Content-Type")
+	apiResponse := apiResponse{
 		Message:  "622 - All The Fucks",
 		Subtitle: "Server invites you to consider the truly monumental amount of fucks it couldn't give about your request.",
-	})
+	}
+
+	if contentType == "application/json" {
+		json.NewEncoder(w).Encode(apiResponse)
+		return
+	}
+
+	t, _ := template.New("api template").ParseFiles("api/tmpl/api.html")
+	t.ExecuteTemplate(w, "api.html", apiResponse)
 }
 
 // VersionHandler is the handler for version get requests
