@@ -10,4 +10,4 @@ A port of the infamous foaas in Golang
 * `git clone git@github.com:thanosKontos/foaas-golang-port.git`
 * `cd foaas-golang-port`
 * `glide install`
-* `go run main.go`
+* `go run main.go router.go`
