@@ -1,16 +1,16 @@
 package main
 
 import (
+	"github.com/stretchr/testify/assert"
+	"io/ioutil"
 	"net/http"
 	"testing"
-	"io/ioutil"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestHtmlResponses(t *testing.T) {
 	var cases = map[string]string{
-		"http://127.0.0.1:8000/version": "<h1>Version 0.0.1</h1>",
-		"http://127.0.0.1:8000/zero/John%20Doe": "<h1>Zero, thats the number of fucks I give.</h1>",
+		"http://127.0.0.1:8000/version":               "<h1>Version 0.0.1</h1>",
+		"http://127.0.0.1:8000/zero/John%20Doe":       "<h1>Zero, thats the number of fucks I give.</h1>",
 		"http://127.0.0.1:8000/pulp/Greek/John%20Doe": "<h1>Greek, motherfucker, do you speak it?</h1>",
 	}
 
@@ -22,13 +22,13 @@ func TestHtmlResponses(t *testing.T) {
 
 		assert.Equal(t, http.StatusOK, statusCode)
 		assert.Contains(t, body, expectedString)
-    }
+	}
 }
 
 func TestJsonResponses(t *testing.T) {
 	var cases = map[string]string{
-		"http://127.0.0.1:8000/version": "{\"message\":\"Version 0.0.1\",\"subtitle\":\"FOAAS\"}",
-		"http://127.0.0.1:8000/zero/John%20Doe": "{\"message\":\"Zero, thats the number of fucks I give.\",\"subtitle\":\"- John Doe\"}",
+		"http://127.0.0.1:8000/version":               "{\"message\":\"Version 0.0.1\",\"subtitle\":\"FOAAS\"}",
+		"http://127.0.0.1:8000/zero/John%20Doe":       "{\"message\":\"Zero, thats the number of fucks I give.\",\"subtitle\":\"- John Doe\"}",
 		"http://127.0.0.1:8000/pulp/Greek/John%20Doe": "{\"message\":\"Greek, motherfucker, do you speak it?\",\"subtitle\":\"- John Doe\"}",
 	}
 
@@ -36,7 +36,7 @@ func TestJsonResponses(t *testing.T) {
 		req, err := http.NewRequest("GET", url, nil)
 		req.Header.Add("Content-Type", `application/json`)
 		assert.NoError(t, err)
-	
+
 		statusCode, body := getResponseCodeAndBody(req)
 
 		assert.Equal(t, http.StatusOK, statusCode)
