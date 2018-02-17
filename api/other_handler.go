@@ -2,16 +2,16 @@ package api
 
 import (
 	"encoding/json"
-	"net/http"
-	"html/template"
-	"github.com/gorilla/mux"
 	"fmt"
+	"github.com/gorilla/mux"
+	"html/template"
+	"net/http"
 )
 
 // GenericErrorHandler is the handler for 404s and 405s
 func GenericErrorHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(apiResponse{
-		Message: "622 - All The Fucks",
+		Message:  "622 - All The Fucks",
 		Subtitle: "Server invites you to consider the truly monumental amount of fucks it couldn't give about your request.",
 	})
 }
@@ -20,7 +20,7 @@ func GenericErrorHandler(w http.ResponseWriter, r *http.Request) {
 func VersionHandler(w http.ResponseWriter, r *http.Request) {
 	contentType := r.Header.Get("Content-Type")
 	apiResponse := apiResponse{
-		Message: "Version 0.0.1",
+		Message:  "Version 0.0.1",
 		Subtitle: "FOAAS",
 	}
 
