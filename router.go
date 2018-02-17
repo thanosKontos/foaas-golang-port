@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/thanosKontos/foaas-golang/api"
+	"github.com/thanosKontos/foaas-golang-port/api"
 	"net/http"
 )
 
