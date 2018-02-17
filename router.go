@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	"net/http"
 	"github.com/thanosKontos/foaas-golang/api"
+	"net/http"
 )
 
 func getRouter() *mux.Router {
