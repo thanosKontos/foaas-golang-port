@@ -1,0 +1,9 @@
+package: github.com/thanosKontos/foaas-golang
+import:
+- package: github.com/gorilla/mux
+  version: ^1.6.1
+testImport:
+- package: github.com/stretchr/testify
+  version: ^1.2.1
+  subpackages:
+  - assert
